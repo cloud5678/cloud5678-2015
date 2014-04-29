@@ -12,7 +12,7 @@ TBD
 Stratus (5678S) Contributors:  
 TBD  
   
-* (5678*) Contributors:  
+- (5678-) Contributors:  
 TBD  
   
 This repository will contain the latest code for CVHS Robotics during VEX Skyrise as a backup and as a shared resource between programming team members. Please keep your subteam's code in your subteam folder and any shared libraries in the Shared folder.  
