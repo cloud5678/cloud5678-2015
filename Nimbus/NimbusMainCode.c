@@ -24,15 +24,15 @@ void driveArcade(int y, int x)
 
 void setLiftSpeed(int z)
 {
-	motor[rightLift] = motor[leftLift] z;
+	motor[rightLift] = motor[leftLift] = z;
 	//to other programmers, "leftArm" refers to both left arm motors and "rightArm" refers to both right arm motors --Mason
 }
 
 void pre_auton()
 {
-  // Set bStopTasksBetweenModes to false if you want to keep user created tasks running between
-  // Autonomous and Tele-Op modes. You will need to manage all user created tasks if set to false.
-  bStopTasksBetweenModes = true;
+	// Set bStopTasksBetweenModes to false if you want to keep user created tasks running between
+	// Autonomous and Tele-Op modes. You will need to manage all user created tasks if set to false.
+	bStopTasksBetweenModes = true;
 
 	// All activities that occur before the competition starts
 	// Example: clearing encoders, setting servo positions, ...
@@ -49,11 +49,9 @@ void pre_auton()
 
 task autonomous()
 {
-  // .....................................................................................
-  // Insert user code here.
-  // .....................................................................................
-
-	AutonomousCodePlaceholderForTesting();  // Remove this function call once you have "real" code.
+	driveArcade(100, 100);
+	wait1Msec(10000);
+	driveArcade(0,0);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -76,19 +74,19 @@ task usercontrol()
 		int DriveY = vexRT[Ch3];
 		int liftSpeed = vexRT[Ch2];
 
-		if (abs(driveY) < 5) driveY = 0; // Deadband
-		if (abs(driveX) < 5) driveX = 0; // Deadband
-		if (abs(liftSpeed) < 5) liftSpeed = 0; //Deadband
+		if (abs(DriveY) < 5) DriveY = 0; // Deadband
+			if (abs(DriveX) < 5) DriveX = 0; // Deadband
+			if (abs(liftSpeed) < 5) liftSpeed = 0; //Deadband
 
-		driveArcade(driveY, driveX);
+		driveArcade(DriveY, DriveX);
 		setLiftSpeed(liftSpeed);
 
 		// This is the main execution loop for the user control program. Each time through the loop
-	  // your program should update motor + servo values based on feedback from the joysticks.
+		// your program should update motor + servo values based on feedback from the joysticks.
 
-	  // .....................................................................................
-	  // Insert user code here. This is where you use the joystick values to update your motors, etc.
-	  // .....................................................................................
+		// .....................................................................................
+		// Insert user code here. This is where you use the joystick values to update your motors, etc.
+		// .....................................................................................
 
 
 	}
