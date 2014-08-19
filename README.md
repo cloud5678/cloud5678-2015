@@ -7,7 +7,9 @@ ThunderCloud (5678) Contributors:
 TBD  
 
 Nimbus (5678N) Contributors:  
-TBD  
+ Mason Cole
+ Sai
+ Christine
 
 Stratus (5678S) Contributors:  
 TBD  
