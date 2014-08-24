@@ -77,7 +77,9 @@ task usercontrol()
 
 	while (true)
 	{
-		while (vexRT[btn6D]== 0)
+		bool tankdrive = false; //enable tankdrive???
+
+		while (tankdrive==false)
 		{
 			int DriveX = -vexRT[Ch4];
 			int DriveY = vexRT[Ch3];
@@ -90,7 +92,7 @@ task usercontrol()
 			driveArcade(DriveY, DriveX);
 			setLiftSpeed(liftSpeed);
 	}
-		while (vexRT[btn6D]==1) //Tank Drive Option For Debugging DriveTrain
+		while (tankdrive==true) //Tank Drive Option For Debugging DriveTrain
 	{
 			motor[leftRear] = motor[leftFront] = vexRT[Ch3];
 			motor[rightRear] = motor[rightFront] = vexRT[Ch2];
