@@ -85,9 +85,9 @@ task usercontrol()
 			int DriveY = vexRT[Ch3];
 			int liftSpeed = vexRT[Ch2];
 
-			if (abs(DriveY) < 5) DriveY = 0; // Deadband
+				if (abs(DriveY) < 5) DriveY = 0; // Deadband
 				if (abs(DriveX) < 5) DriveX = 0; // Deadband
-				if (abs(liftSpeed) < 5) liftSpeed = 0; //Deadband
+				if (abs(liftSpeed) < 5) liftSpeed = 5; //Deadband and Keep String Taught
 
 			driveArcade(DriveY, DriveX);
 			setLiftSpeed(liftSpeed);
