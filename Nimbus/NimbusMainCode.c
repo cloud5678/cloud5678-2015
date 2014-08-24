@@ -77,17 +77,25 @@ task usercontrol()
 
 	while (true)
 	{
+		while (vexRT[btn6D]== 0)
+		{
+			int DriveX = -vexRT[Ch4];
+			int DriveY = vexRT[Ch3];
+			int liftSpeed = vexRT[Ch2];
 
-		int DriveX = -vexRT[Ch4];
-		int DriveY = vexRT[Ch3];
-		int liftSpeed = vexRT[Ch2];
+			if (abs(DriveY) < 5) DriveY = 0; // Deadband
+				if (abs(DriveX) < 5) DriveX = 0; // Deadband
+				if (abs(liftSpeed) < 5) liftSpeed = 0; //Deadband
 
-		if (abs(DriveY) < 5) DriveY = 0; // Deadband
-			if (abs(DriveX) < 5) DriveX = 0; // Deadband
-			if (abs(liftSpeed) < 5) liftSpeed = 0; //Deadband
+			driveArcade(DriveY, DriveX);
+			setLiftSpeed(liftSpeed);
+	}
+		while (vexRT[btn6D]==1) //Tank Drive Option For Debugging DriveTrain
+	{
+			motor[leftRear] = motor[leftFront] = vexRT[Ch3];
+			motor[rightRear] = motor[rightFront] = vexRT[Ch2];
 
-		driveArcade(DriveY, DriveX);
-		setLiftSpeed(liftSpeed);
+		}
 
 		// This is the main execution loop for the user control program. Each time through the loop
 		// your program should update motor + servo values based on feedback from the joysticks.
@@ -97,5 +105,5 @@ task usercontrol()
 		// .....................................................................................
 
 
-	}
+}
 }
