@@ -26,8 +26,8 @@
 
 void driveArcade(int y, int x)
 {
-	motor[leftFront] = motor[leftRear] = y - x;
-	motor[rightFront] = motor[rightRear] = y + x;
+	motor[rightRear] = motor[rightFront] = y + x;
+	motor[leftRear] = motor[leftFront] = y - x;
 }
 
 void setLiftSpeed(int z)
@@ -58,7 +58,7 @@ void pre_auton()
 task autonomous()
 {
 	driveArcade(100, 100);
-	wait1Msec(10000);
+	wait1Msec(10000); //ten seconds
 	driveArcade(0,0);
 }
 
@@ -77,27 +77,8 @@ task usercontrol()
 
 	while (true)
 	{
-		bool tankdrive = false; //enable tankdrive???
-
-		while (tankdrive==false)
-		{
-			int DriveX = -vexRT[Ch4];
-			int DriveY = vexRT[Ch3];
-			int liftSpeed = vexRT[Ch2];
-
-				if (abs(DriveY) < 5) DriveY = 0; // Deadband
-				if (abs(DriveX) < 5) DriveX = 0; // Deadband
-				if (abs(liftSpeed) < 5) liftSpeed = 5; //Deadband and Keep String Taught
-
-			driveArcade(DriveY, DriveX);
-			setLiftSpeed(liftSpeed);
+		driveArcade(vexRT[Ch2], vexRT[Ch1]);
 	}
-		while (tankdrive==true) //Tank Drive Option For Debugging DriveTrain
-	{
-			motor[leftRear] = motor[leftFront] = vexRT[Ch3];
-			motor[rightRear] = motor[rightFront] = vexRT[Ch2];
-
-		}
 
 		// This is the main execution loop for the user control program. Each time through the loop
 		// your program should update motor + servo values based on feedback from the joysticks.
@@ -107,5 +88,4 @@ task usercontrol()
 		// .....................................................................................
 
 
-}
 }
