@@ -28,6 +28,8 @@ void driveArcade(int y, int x)
 {
 	motor[rightRear] = motor[rightFront] = y + x;
 	motor[leftRear] = motor[leftFront] = y - x;
+
+	// I can make it move!!! Nolan wouldn't let me copy last year's code until we tested this one, but we never did...
 }
 
 void setLiftSpeed(int z)
