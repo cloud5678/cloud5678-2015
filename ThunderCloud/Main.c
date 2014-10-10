@@ -1,11 +1,12 @@
-#pragma config(Motor,  port1,           frontLeft,     tmotorVex393, openLoop)
-#pragma config(Motor,  port2,           backLeft,      tmotorVex393, openLoop, encoder, encoderPort, I2C_1, 1233528)
-#pragma config(Motor,  port3,           backRight,     tmotorVex393, openLoop, reversed, encoder, encoderPort, I2C_2, 1233528)
-#pragma config(Motor,  port4,           frontRight,    tmotorVex393, openLoop, reversed)
-#pragma config(Motor,  port5,						rightLift1,		 tmotorVex393, openLoop)
-#pragma config(Motor,  port6,     			rightLift2,		 tmotorVex393, openLoop, reversed)
-#pragma config(Motor,  port7,		  			leftLift1,		 tmotorVex393, openLoop)
-#pragma config(Motor,  port8,						leftLift2,		 tmotorVex393, openLoop, reversed)
+#pragma config(Sensor, dgtl1,  					cubeGrabber,      	sensorDigitalOut)
+#pragma config(Motor,  port2,           frontLeft,    			tmotorVex393, openLoop)
+#pragma config(Motor,  port3,           backLeft,      			tmotorVex393, openLoop)
+#pragma config(Motor,  port4,           backRight,     			tmotorVex393, openLoop, reversed)
+#pragma config(Motor,  port5,           frontRight,    			tmotorVex393, openLoop, reversed)
+#pragma config(Motor,  port6,						rightFrontLift,		 	tmotorVex393, openLoop)
+#pragma config(Motor,  port7,     			rightBackLift,		 	tmotorVex393, openLoop, reversed)
+#pragma config(Motor,  port8,		  			leftFrontLift,		 	tmotorVex393, openLoop)
+#pragma config(Motor,  port9,						leftBackLift,		 		tmotorVex393, openLoop, reversed)
 
 
 #pragma platform(VEX)
@@ -22,6 +23,7 @@
 
 const int ARMAX = 1800;
 const int ARMIN = 0;
+bool solExtended = false;
 
 void robotShutdown()
 {
@@ -35,6 +37,7 @@ void robotShutdown()
 	motor[port8] = 0;
 	motor[port9] = 0;
 	motor[port10] = 0;
+	SensorValue[cubeGrabber] = 0;
 }
 
 
@@ -49,10 +52,24 @@ void driveTank(int l, int r)
 	motor[frontRight] = motor[backRight] = r;
 }
 
-void setLiftSpeed(int z)
+void setLiftSpeed(int i)
 {
-	motor[port5] = motor[port6] = z;
-	motor[port7] = motor[port8] = z;
+	motor[rightFrontLift] = motor[rightBackLift] = i;
+	motor[leftFrontLift] = motor[leftBackLift] = -1*i;
+}
+
+void setCubeGrabber(int i)
+{
+	//if(solExtended)
+	//{
+	//	SensorValue[cubeGrabber] = 0;
+	//}
+	//else
+	//{
+		SensorValue[cubeGrabber] = i;
+	//}
+	//solExtended = !solExtended;
+
 }
 
 void pre_auton()
@@ -84,22 +101,18 @@ task usercontrol()
 	{
 				int driveX = vexRT[Ch4];
 		  	int driveY = vexRT[Ch3] ;
-		  	int liftSpeed = vexRT[Ch2];
+		  	int liftSpeed = -1*vexRT[Ch2];
 		  	int intakeSpeed = 127*((vexRT[Btn5U])-(vexRT[Btn5D]));
 
-	 			if (vexRT[Btn8U])
-	 			{
-	  			pidOverride = true;
-		  	}
-		  	if (vexRT[Btn7U]) {
-		  		pidOverride = false;
-		  	}
 
 				if (abs(driveY) < 8) driveY = 0; // Drive deadband
 				if (abs(driveX) < 8) driveX = 0; // Drive deadband
+				if (abs(liftSpeed) < 8) liftSpeed = 0;
 
 		  	driveArcade(driveY * 100 / 128, driveX * 100 / 128);
 		  	setLiftSpeed(liftSpeed*100/128);
+		  	setCubeGrabber(vexRT[Btn6U]);
+		  	//setCubeGrabber(vexRT[Btn6D]);
 		  	wait1Msec(20);
 
 	}
