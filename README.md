@@ -4,7 +4,7 @@ cloud5678-2015
 Carnegie Vanguard High School VEX Robotics Code 2014-2015  
 
 ThunderCloud (5678) Contributors:  
-TBD  
+Erik Ostlind  
 
 Nimbus (5678N) Contributors:  
 Mason Cole  
