@@ -1,5 +1,5 @@
-#pragma config(Motor,  port1,           RightFront,    tmotorVex393, openLoop)
-#pragma config(Motor,  port2,           LeftFront,     tmotorVex393, openLoop)
+#pragma config(Motor,  port2,           RightFront,    tmotorVex393, openLoop)
+#pragma config(Motor,  port1,           LeftFront,     tmotorVex393, openLoop)
 #pragma config(Motor,  port3,           RightRear,     tmotorVex393, openLoop)
 #pragma config(Motor,  port4,           LeftRear,      tmotorVex393, openLoop)
 #pragma config(Motor,  port5,           RightArmLower, tmotorVex393, openLoop)
