@@ -4,7 +4,8 @@ Nimbus
 Nimbus VEX Code 2014-2015  
 
 Contributors:  
-  Felicia Oentoro  
-  Mason Cole  
+	Mason Cole
+	Felicia Oentoro  
   
-This folder will contain the latest code for CVHS Robotics during VEX Skyrise as a shared resource between Nimbus team members.
+  
+This folder will contain the latest code for CVHS Robotics Team 5678 during VEX Skyrise as a shared resource between Nimbus team members.
