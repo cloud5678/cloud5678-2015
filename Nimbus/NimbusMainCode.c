@@ -28,9 +28,19 @@ void driveArcade(int y, int x)
 {
 	motor[rightRear] = motor[rightFront] = y + x;
 	motor[leftRear] = motor[leftFront] = y - x;
-
+}//Your code wouldnt compile b/c u had a parenthese instead of a bracket.
 	// I can make it move!!! Nolan wouldn't let me copy last year's code until we tested this one, but we never did...
-}
+
+//Copying last year's code is not a good idea because it is a different robot and if you don't write your own code and understand it really well, they you will not be able to make necessary changes on the fly at tournaments --MASON
+	//It looked like a good first try, however, some of the code you removed was necessary and I have put it back in and explained it below. I have been programming for many years and am happy to help you. Do not make changes to the code without
+		//running it by me first. You can reach me at 713-416-9448 or at mason2smart@gmail.com. We need to work together as a team nobody can win as an individual.
+			//The robot was moving under the previous code; all that needed changing were the ports
+				//and the motors for the linear slide lift (which no longer exists). ALso, I am adding the Tank drive option back in. As I previously specifically stated in a comment, the tank drive was to be used for DEBUGGING THE DRIVETRAIN in
+					//order to make sure all motors are functioning properly with the right speed and torque. Andrew Lynch had asked me to add this to the program.
+						//You also deleted the deadband, which made sure no slight false readings came from the joysticks in the controller when the robot is supposed to be stationary. --Mason
+
+
+
 
 void setLiftSpeed(int z)
 {
@@ -79,15 +89,33 @@ task usercontrol()
 
 	while (true)
 	{
-		driveArcade(vexRT[Ch2], vexRT[Ch1]);
+		bool tankdrive = false; //enable tankdrive??? -- FOR DEBUGGING
+
+		while (tankdrive==false)
+		{
+			int DriveX = -vexRT[Ch4]; //sets drive speed variables
+			int DriveY = vexRT[Ch3];
+			int liftSpeed = vexRT[Ch2]; //sets lift speed variable
+
+				if (abs(DriveY) < 5) DriveY = 0; // Deadband
+				if (abs(DriveX) < 5) DriveX = 0; // Deadband
+				if (abs(liftSpeed) < 5) liftSpeed = 5; //Deadband and Keep String Taught
+
+			driveArcade(DriveY, DriveX); //drive arcade method
+			setLiftSpeed(liftSpeed); //lift speed method
+		}
+		while (tankdrive==true) //Tank Drive Option For Debugging DriveTrain
+		{
+			motor[leftRear] = motor[leftFront] = vexRT[Ch3];
+			motor[rightRear] = motor[rightFront] = vexRT[Ch2];
+
+		}
 	}
 
-		// This is the main execution loop for the user control program. Each time through the loop
-		// your program should update motor + servo values based on feedback from the joysticks.
+	// This is the main execution loop for the user control program. Each time through the loop
+	// your program should update motor + servo values based on feedback from the joysticks.
 
-		// .....................................................................................
-		// Insert user code here. This is where you use the joystick values to update your motors, etc.
-		// .....................................................................................
-
-
+	// .....................................................................................
+	// Insert user code here. This is where you use the joystick values to update your motors, etc.
+	// .....................................................................................
 }
