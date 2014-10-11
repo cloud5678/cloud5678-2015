@@ -8,4 +8,4 @@ Contributors:
 	Felicia Oentoro  
   
   
-This folder will contain the latest code for CVHS Robotics Team 5678 during VEX Skyrise as a shared resource between Nimbus team members.
+This folder will contain the latest code for CVHS Robotics Team 5678N during VEX Skyrise as a shared resource between Nimbus team members.
