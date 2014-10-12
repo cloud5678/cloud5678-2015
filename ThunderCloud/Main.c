@@ -3,8 +3,8 @@
 #pragma config(Motor,  port3,           backLeft,      			tmotorVex393, openLoop)
 #pragma config(Motor,  port4,           backRight,     			tmotorVex393, openLoop, reversed)
 #pragma config(Motor,  port5,           frontRight,    			tmotorVex393, openLoop, reversed)
-#pragma config(Motor,  port6,						rightFrontLift,		 	tmotorVex393, openLoop)
-#pragma config(Motor,  port7,     			rightBackLift,		 	tmotorVex393, openLoop, reversed)
+#pragma config(Motor,  port6,						rightFrontLift,		 	tmotorVex393, openLoop, reversed)
+#pragma config(Motor,  port7,     			rightBackLift,		 	tmotorVex393, openLoop)
 #pragma config(Motor,  port8,		  			leftFrontLift,		 	tmotorVex393, openLoop)
 #pragma config(Motor,  port9,						leftBackLift,		 		tmotorVex393, openLoop, reversed)
 
@@ -52,23 +52,15 @@ void driveTank(int l, int r)
 	motor[frontRight] = motor[backRight] = r;
 }
 
-void setLiftSpeed(int i)
+void setLiftSpeed(int y, int x)
 {
-	motor[rightFrontLift] = motor[rightBackLift] = i;
-	motor[leftFrontLift] = motor[leftBackLift] = -1*i;
+	motor[rightFrontLift] = motor[rightBackLift] = y + x;
+	motor[leftFrontLift] = motor[leftBackLift] = y - x;
 }
 
 void setCubeGrabber(int i)
 {
-	//if(solExtended)
-	//{
-	//	SensorValue[cubeGrabber] = 0;
-	//}
-	//else
-	//{
-		SensorValue[cubeGrabber] = i;
-	//}
-	//solExtended = !solExtended;
+	SensorValue[cubeGrabber] = i;
 
 }
 
@@ -101,7 +93,8 @@ task usercontrol()
 	{
 				int driveX = vexRT[Ch4];
 		  	int driveY = vexRT[Ch3] ;
-		  	int liftSpeed = -1*vexRT[Ch2];
+		  	int liftSpeed = vexRT[Ch2];
+		  	int liftCorrection = vexRT[Ch1];
 		  	int intakeSpeed = 127*((vexRT[Btn5U])-(vexRT[Btn5D]));
 
 
@@ -110,7 +103,7 @@ task usercontrol()
 				if (abs(liftSpeed) < 8) liftSpeed = 0;
 
 		  	driveArcade(driveY * 100 / 128, driveX * 100 / 128);
-		  	setLiftSpeed(liftSpeed*100/128);
+		  	setLiftSpeed(liftSpeed*100/128, liftCorrection*64/128);
 		  	setCubeGrabber(vexRT[Btn6U]);
 		  	//setCubeGrabber(vexRT[Btn6D]);
 		  	wait1Msec(20);
