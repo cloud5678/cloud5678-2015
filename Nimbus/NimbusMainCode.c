@@ -127,11 +127,42 @@ task usercontrol()
 
 		if (vexRT[Ch2]==0)
 		{if (vexRT[Btn5D]==0)
-			{if (vexRT[Btn5U]==0) //if button not pushed and joystick for lift not moved, then no lift on that side
-		{
-
+			{if (vexRT[Btn5U]==0)//if button not pushed and joystick for lift not moved, then no lift on that side
+				{if (vexRT[Btn6D]==0)
+					{if (vexRT[Btn6U]==0)
+	{
 			motor[leftLift] = 20; //constant to keep it level at current hieght. may need to be changed
-		}}}
+		}
+		else
+		{
+				if (vexRT[Btn5U] == 1) //seperate controls right side of lift
+		{
+				motor[leftLift]=100; //lower power for more control
+		}
+				if (vexRT[Btn5D] == 1)
+		{
+				motor[leftLift]=-15; //lower power for more control, esp. when going down
+						if (vexRT[Btn6U] == 1) //seperate controls right side of lift
+		{
+			motor[rightLift]=100; //lower power for more control
+		}
+			if (vexRT[Btn6D] == 1)
+		{
+			motor[rightLift]=-15; //lower power for more control, esp. when going down
+		}
+			if (vexRT[Btn6U] == 1) //seperate controls right side of lift
+		{
+			motor[rightLift]=100; //lower power for more control
+		}
+		if (vexRT[Btn6D] == 1)
+		{
+			motor[rightLift]=-15; //lower power for more control, esp. when going down
+		}
+		if (liftSpeed != 0)
+		{
+			setLiftSpeed(liftSpeed);
+		}
+		}}}}}}
 		                                          ///////////////////////////////////////SEPERATE CONTROLS FOR EACH SIDE OF LIFT
 	if (vexRT[Btn5U] == 1) //seperate controls right side of lift
 		{
