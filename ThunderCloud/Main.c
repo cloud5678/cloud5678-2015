@@ -58,10 +58,17 @@ void setLiftSpeed(int y, int x)
 	motor[leftFrontLift] = motor[leftBackLift] = y - x;
 }
 
-void setCubeGrabber(int i)
+void setCubeGrabber()
 {
-	SensorValue[cubeGrabber] = i;
-
+	if(solExtended)
+	{
+		SensorValue[cubeGrabber] = 0;
+	}
+	else
+	{
+		SensorValue[cubeGrabber] = 1;
+	}
+	solExtended = !solExtended;
 }
 
 void pre_auton()
@@ -88,7 +95,7 @@ task autonomous()
 task usercontrol()
 {
 	// User control code here, inside the loop
-
+	int btn6UValue = 0;
 	while (true)
 	{
 				int driveX = vexRT[Ch4];
@@ -98,13 +105,18 @@ task usercontrol()
 		  	int intakeSpeed = 127*((vexRT[Btn5U])-(vexRT[Btn5D]));
 
 
+
 				if (abs(driveY) < 8) driveY = 0; // Drive deadband
 				if (abs(driveX) < 8) driveX = 0; // Drive deadband
 				if (abs(liftSpeed) < 8) liftSpeed = 0;
 
 		  	driveArcade(driveY * 100 / 128, driveX * 100 / 128);
 		  	setLiftSpeed(liftSpeed*100/128, liftCorrection*64/128);
-		  	setCubeGrabber(vexRT[Btn6U]);
+		  	if(btn6UValue!=vexRT[Btn6U])
+		  	{
+		  		setCubeGrabber();
+		  	}
+		  	btn6UValue = vexRT[Btn6U];
 		  	//setCubeGrabber(vexRT[Btn6D]);
 		  	wait1Msec(20);
 
