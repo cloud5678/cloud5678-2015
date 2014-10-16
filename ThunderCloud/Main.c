@@ -112,12 +112,11 @@ task usercontrol()
 
 		  	driveArcade(driveY * 100 / 128, driveX * 100 / 128);
 		  	setLiftSpeed(liftSpeed*100/128, liftCorrection*64/128);
-		  	if(btn6UValue!=vexRT[Btn6U])
+		  	if(btn6UValue!=vexRT[Btn6U] && vexRT[Btn6U]==1)
 		  	{
 		  		setCubeGrabber();
 		  	}
 		  	btn6UValue = vexRT[Btn6U];
-		  	//setCubeGrabber(vexRT[Btn6D]);
 		  	wait1Msec(20);
 
 	}
