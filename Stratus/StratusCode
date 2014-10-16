@@ -1,4 +1,4 @@
-#pragma config(Sensor, dgtl1,  intake,         sensorDigitalOut)
+#pragma config(Sensor, in1,    Pot,            sensorPotentiometer)
 #pragma config(Motor,  port1,           frontLeft,     tmotorVex393, openLoop)
 #pragma config(Motor,  port2,           frontRight,    tmotorVex393, openLoop)
 #pragma config(Motor,  port3,           backRight,     tmotorVex393, openLoop)
@@ -84,12 +84,13 @@ void driveArcade(int y, int x)
 task usercontrol()
 {
 	// User control code here, inside the loop
+// for sensor use SensorValue[nameofsensor(i.e. Pot)]
 	while (true)
 	{int driveX = vexRT[Ch3];
 		  	int driveY = vexRT[Ch4] ;
 		  	int liftSpeed = vexRT[Ch2];
 		  	int liftCorrection = vexRT[Ch1];
-				SensorValue[intake]=vexRT[Btn6U];
+			SensorValue[Pot]
 		  	driveArcade(driveY * 100 / 128, driveX * 100 / 128);
 		  	setLiftSpeed(liftSpeed*100/128, liftCorrection*64/128);
 	//motor[LeftRear]=vexRT[Btn6D]-vexRT[Btn6U]+vexRT[Ch4];
