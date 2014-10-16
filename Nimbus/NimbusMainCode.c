@@ -107,9 +107,8 @@ task usercontrol()
 
 			driveArcade(DriveY, DriveX); //drive arcade method
 			setLiftSpeed(liftSpeed); //lift speed method
-		}
-		                                        ///////////////////////////////////////SEPERATE CONTROLS FOR EACH SIDE OF LIFT
-		if (vexRT[Btn6U] == 1) //seperate controls right side of lift
+
+				if (vexRT[Btn6U] == 1) //seperate controls right side of lift
 		{
 			motor[rightLift]=100; //lower power for more control
 		}
@@ -172,6 +171,10 @@ task usercontrol()
 		{
 			motor[leftLift]=-15; //lower power for more control, esp. when going down
 		}
+
+
+	}
+		                                        ///////////////////////////////////////SEPERATE CONTROLS FOR EACH SIDE OF LIFT
 
 		while (tankdrive==true) //Tank Drive Option For Debugging DriveTrain
 		{
