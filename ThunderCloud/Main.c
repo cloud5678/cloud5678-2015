@@ -102,16 +102,15 @@ task usercontrol()
 		  	int driveY = vexRT[Ch3] ;
 		  	int liftSpeed = vexRT[Ch2];
 		  	int liftCorrection = vexRT[Ch1];
-		  	int intakeSpeed = 127*((vexRT[Btn5U])-(vexRT[Btn5D]));
 
 
 
 				if (abs(driveY) < 8) driveY = 0; // Drive deadband
 				if (abs(driveX) < 8) driveX = 0; // Drive deadband
-				if (abs(liftSpeed) < 8) liftSpeed = 0;
+				if (abs(liftSpeed) < 8) liftSpeed = 0; // Lift deadband
 
 		  	driveArcade(driveY * 100 / 128, driveX * 100 / 128);
-		  	setLiftSpeed(liftSpeed*100/128, liftCorrection*64/128);
+		  	setLiftSpeed(liftSpeed * 100 / 128, liftCorrection * 64 / 128);
 		  	if(btn6UValue!=vexRT[Btn6U] && vexRT[Btn6U]==1)
 		  	{
 		  		setCubeGrabber();
