@@ -35,6 +35,13 @@ void driveArcade(int y, int x)
 	motor[rightFront] = motor[rightRear] = .7/.85*y - x;
 }
 
+void driveMecanum(int y, int x, int r)
+{
+	motor[leftFront] = y + x - r;
+	motor[leftRear] = y + x + r;
+	motor[rightFront] = y - x + r;
+	motor[rightRear] = y - x - r;
+}
 
 void setLiftSpeed(int y)
 {
@@ -96,16 +103,18 @@ task usercontrol()
 		{
 			int DriveX = vexRT[Ch4]; //sets drive speed variables
 			int DriveY = vexRT[Ch3];
+			int rotation = vexRT[Ch1];
 
 			int liftSpeed = vexRT[Ch2]; //sets liftspeed equal to vexRT[Ch2]
-			int liftCorrection = vexRT[Ch1];
+			//int liftCorrection = vexRT[Ch1];
 			int clawVal = vexRT[Btn5U];
 
 			if (abs(DriveY) < 5) DriveY = 0; // Deadband
 			if (abs(DriveX) < 5) DriveX = 0; // Deadband
 			if (abs(liftSpeed) < 5) liftSpeed = 0; //Deadband for lift
 
-			driveArcade(DriveY, DriveX); //drive arcade method
+			//driveArcade(DriveY, DriveX); //drive arcade method
+			driveMecanum(DriveY, DriveX, rotation);
 			setLiftSpeed(liftSpeed); //lift speed method
 			setClaw(clawVal);
 
