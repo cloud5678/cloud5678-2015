@@ -43,25 +43,53 @@ void pre_auton()
 //
 /////////////////////////////////////////////////////////////////////////////////////////
 task autonomous()
-{
+{motor[leftBackLift] = 127;
+motor[leftFrontLift] = 127;
+motor[rightBackLift] = 127;
+motor[rightFrontLift] = 127;
+wait1Msec(1000);
+motor[frontLeft] = 127;
+	motor[backLeft] = 127;
+	motor[frontRight] = 127;
+	motor[backRight] = 127;
+	motor[leftBackLift] = 127;
+motor[leftFrontLift] = 127;
+motor[rightBackLift] = 127;
+motor[rightFrontLift] = 127;
+	wait1Msec(500);
+	motor[frontLeft] = 0;
+	motor[backLeft] = 0;
+	motor[frontRight] = 0;
+	motor[backRight] = 0;
+	motor[leftBackLift] = 0;
+motor[leftFrontLift] = 0;
+motor[rightBackLift] = 0;
+motor[rightFrontLift] = 0;
+wait1Msec(3000);
+	motor[frontLeft] = -127;
+	motor[backLeft] = -127;
+	motor[frontRight] = -127;
+	motor[backRight] = -127;
+	wait1Msec(3000);
+	motor[frontLeft] = 0;
+	motor[backLeft] = 0;
+	motor[frontRight] = 0;
+	motor[backRight] = 0;
+	motor[leftBackLift] = 0;
+motor[leftFrontLift] = 0;
+motor[rightBackLift] = 0;
+motor[rightFrontLift] = 0;
 	// .....................................................................................
 	// Insert user code here.
 	// .....................................................................................
-while(SensorValue(sonarSensor)> 10 ||SensorValue(sonarSensor) == -1)
-{
-	motor[backLeft] = 127;
-  motor[backRight] = 127;
-  motor[frontLeft] = 127;
-  motor[frontRight] = 127;
+//while(SensorValue(sonarSensor)> 10 ||SensorValue(sonarSensor) == -1)
 }
-	motor[backLeft] = 0;
-  motor[backRight] = 0;
-  motor[frontLeft] = 0;
-  motor[frontRight] = 0;
+
+	
   //wait10Msec(1000);
 	// AutonomousCodePlaceholderForTesting(); // Remove this function call once you have "real" code.
-}
-#define PID_SENSOR_INDEX    myEncoder
+
+/* #define PID_SENSOR_INDEX    myEncoder
 #define PID_SENSOR_SCALE    1
 
 #define PID_MOTOR_INDEX     myMotor
@@ -87,7 +115,7 @@ static float pidRequestedValue;
 /*                                                                             */
 /*-----------------------------------------------------------------------------*/
 
-task pidController()
+/*task pidController()
 {
     float  pidSensorCurrentValue;
 
@@ -158,7 +186,7 @@ task pidController()
         wait1Msec( 25 );
         }
 }
-
+*\
 /*-----------------------------------------------------------------------------*/
 /*                                                                             */
 /*  main task                                                                  */
