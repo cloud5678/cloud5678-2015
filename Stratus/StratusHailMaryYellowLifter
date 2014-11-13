@@ -45,11 +45,16 @@ void pre_auton()
 task autonomous()
 { motor[claw] = 127;
 	wait1Msec(2000);
-	motor[frontLeft] = 127;
-	motor[backLeft] = 127;
-	motor[frontRight] = 127;
-	motor[backRight] = 127;
-	wait1Msec(250);
+	motor[frontLeft] = -127;
+	motor[backLeft] = -127;
+	motor[frontRight] = -127;
+	motor[backRight] = -127;
+	wait1Msec(500);
+	motor[backLeft] = -127;
+motor[backRight] = 127;
+motor[frontLeft] = -127;
+motor[frontRight] = 127;
+wait1Msec(500);
 motor[claw] = -127;
 wait1Msec(500);
 motor[leftBackLift] = 127;
@@ -57,21 +62,26 @@ motor[leftFrontLift] = 127;
 motor[rightBackLift] = 127;
 motor[rightFrontLift] = 127;
 wait1Msec(1000);
-motor[backLeft] = -127;
+motor[backLeft] = 127;
 motor[backRight] = 127;
-motor[frontLeft] = -127;
+motor[frontLeft] = 127;
 motor[frontRight] = 127;
-wait1Msec(1000);
-motor[claw] = -127;
 motor[leftBackLift] = 127;
 motor[leftFrontLift] = 127;
 motor[rightBackLift] = 127;
 motor[rightFrontLift] = 127;
+wait1Msec(500);
+motor[backLeft] = -127;
+motor[backRight] = 0;
+motor[frontLeft] = -127;
+motor[frontRight] = 0;
+motor[claw] = -127;
 wait1Msec(1500);
 motor[frontLeft] = 0;
 	motor[backLeft] = 0;
 	motor[frontRight] = 0;
 	motor[backRight] = 0;
+	
 	// .....................................................................................
 	// Insert user code here.
 	// .....................................................................................
