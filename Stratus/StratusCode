@@ -44,50 +44,50 @@ void pre_auton()
 /////////////////////////////////////////////////////////////////////////////////////////
 task autonomous()
 {motor[leftBackLift] = 127;
-motor[leftFrontLift] = 127;
-motor[rightBackLift] = 127;
-motor[rightFrontLift] = 127;
-wait1Msec(1000);
-motor[frontLeft] = 127;
+	motor[leftFrontLift] = 127;
+	motor[rightBackLift] = 127;
+	motor[rightFrontLift] = 127;
+	wait1Msec(2000);
+	motor[frontLeft] = 127;
 	motor[backLeft] = 127;
 	motor[frontRight] = 127;
 	motor[backRight] = 127;
 	motor[leftBackLift] = 127;
-motor[leftFrontLift] = 127;
-motor[rightBackLift] = 127;
-motor[rightFrontLift] = 127;
+	motor[leftFrontLift] = 127;
+	motor[rightBackLift] = 127;
+	motor[rightFrontLift] = 127;
 	wait1Msec(500);
 	motor[frontLeft] = 0;
 	motor[backLeft] = 0;
 	motor[frontRight] = 0;
 	motor[backRight] = 0;
 	motor[leftBackLift] = 0;
-motor[leftFrontLift] = 0;
-motor[rightBackLift] = 0;
-motor[rightFrontLift] = 0;
-wait1Msec(3000);
+	motor[leftFrontLift] = 0;
+	motor[rightBackLift] = 0;
+	motor[rightFrontLift] = 0;
+	wait1Msec(3000);
 	motor[frontLeft] = -127;
 	motor[backLeft] = -127;
 	motor[frontRight] = -127;
 	motor[backRight] = -127;
-	wait1Msec(3000);
+	wait1Msec(1000);
 	motor[frontLeft] = 0;
 	motor[backLeft] = 0;
 	motor[frontRight] = 0;
 	motor[backRight] = 0;
 	motor[leftBackLift] = 0;
-motor[leftFrontLift] = 0;
-motor[rightBackLift] = 0;
-motor[rightFrontLift] = 0;
+	motor[leftFrontLift] = 0;
+	motor[rightBackLift] = 0;
+	motor[rightFrontLift] = 0;
 	// .....................................................................................
 	// Insert user code here.
 	// .....................................................................................
-//while(SensorValue(sonarSensor)> 10 ||SensorValue(sonarSensor) == -1)
+	//while(SensorValue(sonarSensor)> 10 ||SensorValue(sonarSensor) == -1)
 }
 
-	
-  //wait10Msec(1000);
-	// AutonomousCodePlaceholderForTesting(); // Remove this function call once you have "real" code.
+
+//wait10Msec(1000);
+// AutonomousCodePlaceholderForTesting(); // Remove this function call once you have "real" code.
 
 /* #define PID_SENSOR_INDEX    myEncoder
 #define PID_SENSOR_SCALE    1
@@ -117,74 +117,74 @@ static float pidRequestedValue;
 
 /*task pidController()
 {
-    float  pidSensorCurrentValue;
+float  pidSensorCurrentValue;
 
-    float  pidError;
-    float  pidLastError;
-    float  pidIntegral;
-    float  pidDerivative;
-    float  pidDrive;
+float  pidError;
+float  pidLastError;
+float  pidIntegral;
+float  pidDerivative;
+float  pidDrive;
 
-    // If we are using an encoder then clear it
-    if( SensorType[ PID_SENSOR_INDEX ] == sensorPotentiometer )
-        SensorValue[ PID_SENSOR_INDEX ] = 0;
+// If we are using an encoder then clear it
+if( SensorType[ PID_SENSOR_INDEX ] == sensorPotentiometer )
+SensorValue[ PID_SENSOR_INDEX ] = 0;
 
-    // Init the variables - thanks Glenn :)
-    pidLastError  = 0;
-    pidIntegral   = 0;
+// Init the variables - thanks Glenn :)
+pidLastError  = 0;
+pidIntegral   = 0;
 
-    while( true )
-        {
-        // Is PID control active ?
-        if( pidRunning )
-            {
-            // Read the sensor value and scale
-            pidSensorCurrentValue = SensorValue[ PID_SENSOR_INDEX ] * PID_SENSOR_SCALE;
+while( true )
+{
+// Is PID control active ?
+if( pidRunning )
+{
+// Read the sensor value and scale
+pidSensorCurrentValue = SensorValue[ PID_SENSOR_INDEX ] * PID_SENSOR_SCALE;
 
-            // calculate error
-            pidError = pidSensorCurrentValue - pidRequestedValue;
+// calculate error
+pidError = pidSensorCurrentValue - pidRequestedValue;
 
-            // integral - if Ki is not 0
-            if( pid_Ki != 0 )
-                {
-                // If we are inside controlable window then integrate the error
-                if( abs(pidError) < PID_INTEGRAL_LIMIT )
-                    pidIntegral = pidIntegral + pidError;
-                else
-                    pidIntegral = 0;
-                }
-            else
-                pidIntegral = 0;
+// integral - if Ki is not 0
+if( pid_Ki != 0 )
+{
+// If we are inside controlable window then integrate the error
+if( abs(pidError) < PID_INTEGRAL_LIMIT )
+pidIntegral = pidIntegral + pidError;
+else
+pidIntegral = 0;
+}
+else
+pidIntegral = 0;
 
-            // calculate the derivative
-            pidDerivative = pidError - pidLastError;
-            pidLastError  = pidError;
+// calculate the derivative
+pidDerivative = pidError - pidLastError;
+pidLastError  = pidError;
 
-            // calculate drive
-            pidDrive = (pid_Kp * pidError) + (pid_Ki * pidIntegral) + (pid_Kd * pidDerivative);
+// calculate drive
+pidDrive = (pid_Kp * pidError) + (pid_Ki * pidIntegral) + (pid_Kd * pidDerivative);
 
-            // limit drive
-            if( pidDrive > PID_DRIVE_MAX )
-                pidDrive = PID_DRIVE_MAX;
-            if( pidDrive < PID_DRIVE_MIN )
-                pidDrive = PID_DRIVE_MIN;
+// limit drive
+if( pidDrive > PID_DRIVE_MAX )
+pidDrive = PID_DRIVE_MAX;
+if( pidDrive < PID_DRIVE_MIN )
+pidDrive = PID_DRIVE_MIN;
 
-            // send to motor
-            motor[ PID_MOTOR_INDEX ] = pidDrive * PID_MOTOR_SCALE;
-            }
-        else
-            {
-            // clear all
-            pidError      = 0;
-            pidLastError  = 0;
-            pidIntegral   = 0;
-            pidDerivative = 0;
-            motor[ PID_MOTOR_INDEX ] = 0;
-            }
+// send to motor
+motor[ PID_MOTOR_INDEX ] = pidDrive * PID_MOTOR_SCALE;
+}
+else
+{
+// clear all
+pidError      = 0;
+pidLastError  = 0;
+pidIntegral   = 0;
+pidDerivative = 0;
+motor[ PID_MOTOR_INDEX ] = 0;
+}
 
-        // Run at 50Hz
-        wait1Msec( 25 );
-        }
+// Run at 50Hz
+wait1Msec( 25 );
+}
 }
 *\
 /*-----------------------------------------------------------------------------*/
@@ -195,7 +195,7 @@ static float pidRequestedValue;
 void driveArcade(int y, int x)
 {
 	motor[frontLeft] = motor[backLeft] = y + x;
-	motor[frontRight] = motor[backRight] = -y + x;
+	motor[frontRight] = motor[backRight] = y - x;
 }
 void setLiftSpeed(int y, int x)
 {
@@ -230,7 +230,7 @@ task usercontrol()
 		int close = vexRT[Btn6D];
 		SensorValue[PotR];
 		SensorValue[PotL];
-		driveArcade(driveY * 100 / 128, driveX * 100 / 128);
+		driveArcade(driveY * -100 / 128, driveX * -100 / 128);
 		setLiftSpeed(liftSpeed*100/128, liftCorrection*64/128);
 		setClaw(open, close);
 		//motor[LeftRear]=vexRT[Btn6D]-vexRT[Btn6U]+vexRT[Ch4];
