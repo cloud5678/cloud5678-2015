@@ -112,7 +112,7 @@ task usercontrol()
 			int rotation = vexRT[Ch4];
 
 			//int liftCorrection = vexRT[Ch1];
-			int clawVal = vexRT[Btn5U];
+			int clawVal = vexRT[Btn8D];
 
 			if (abs(DriveY) < 5)
 				DriveY = 0; // Deadband
@@ -148,7 +148,7 @@ task usercontrol()
 		{
 			motor[leftRear] = motor[leftFront] = vexRT[Ch3];
 			motor[rightRear] = motor[rightFront] = vexRT[Ch2];
-			//liftSpeed = 0; //while in tankdrive mode, liftspeed cannot be used because vexRT[Ch2 is being used for driving]
+			//liftSpeed = 0; //while in tankdrive mode, liftspeed cannot be used because vexRT[Ch2] is being used for driving
 		}
 
 
