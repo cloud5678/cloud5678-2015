@@ -4,8 +4,10 @@
 #pragma config(Motor,  port1,           rightRear,     tmotorVex393, openLoop)
 #pragma config(Motor,  port2,           leftRear,      tmotorVex393, openLoop, reversed)
 #pragma config(Motor,  port3,           rightLift1,    tmotorVex393, openLoop)
-#pragma config(Motor,  port4,           rightLift2,    tmotorVex393, openLoop, reversed)
-#pragma config(Motor,  port7,           leftLift2,     tmotorVex393, openLoop)
+#pragma config(Motor,  port4,           rightLift2,    tmotorVex393, openLoop)
+#pragma config(Motor,  port5,           rightIntake,   tmotorVex393, openLoop)
+#pragma config(Motor,  port6,           leftIntake,    tmotorVex393, openLoop, reversed)
+#pragma config(Motor,  port7,           leftLift2,     tmotorVex393, openLoop, reversed)
 #pragma config(Motor,  port8,           leftLift1,     tmotorVex393, openLoop, reversed)
 #pragma config(Motor,  port9,           leftFront,     tmotorVex393, openLoop, reversed)
 #pragma config(Motor,  port10,          rightFront,    tmotorVex393, openLoop)
@@ -18,7 +20,7 @@
 #pragma autonomousDuration(20)
 #pragma userControlDuration(120)
 
-#include "Vex_Competition_Includes.c"   //Main competition background code...do not modify!
+#include "Vex_Competition_Includes.c"   //Main competition background code...do modify!
 
 /////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -37,10 +39,10 @@ void driveArcade(int y, int x)
 
 void driveMecanum(int y, int x, int r)
 {
-	motor[leftFront] = y + x - r;
-	motor[leftRear] = -y + x - r;
-	motor[rightFront] = y - x - r;
-	motor[rightRear] = -y - x - r;
+	motor[leftFront] = y + x + r;
+	motor[leftRear] = -y + x + r;
+	motor[rightFront] = y - x + r;
+	motor[rightRear] = -y - x + r;
 }
 
 void setLiftSpeed(int y)
@@ -49,6 +51,11 @@ void setLiftSpeed(int y)
 	motor[leftLift1] = motor[leftLift2] = y;
 
 	//to other programmers, "leftArm" refers to both left arm motors and "rightArm" refers to both right arm motors --Mason
+}
+
+void setIntake(int y)
+{
+	motor[rightIntake] = motor[leftIntake] = y;
 }
 
 void setClaw(int y)
@@ -98,24 +105,40 @@ task usercontrol()
 	while (true)
 	{
 		bool tankdrive = false; //enable tankdrive??? -- FOR DEBUGGING
-		int button6Uvalue = 0;
 		while (tankdrive==false)
 		{
 			int DriveX = vexRT[Ch1]; //sets drive speed variables
 			int DriveY = vexRT[Ch3];
 			int rotation = vexRT[Ch4];
 
-			int liftSpeed = vexRT[Ch2]; //sets liftspeed equal to vexRT[Ch2]
 			//int liftCorrection = vexRT[Ch1];
 			int clawVal = vexRT[Btn5U];
 
-			if (abs(DriveY) < 5) DriveY = 0; // Deadband
-			if (abs(DriveX) < 5) DriveX = 0; // Deadband
-			if (abs(liftSpeed) < 5) liftSpeed = 0; //Deadband for lift
+			if (abs(DriveY) < 5)
+				DriveY = 0; // Deadband
+			if (abs(DriveX) < 5)
+				DriveX = 0; // Deadband
+			if (abs(rotation) < 5)
+				rotation = 0;
+
+			if (vexRT[Btn6U]==1)
+				setLiftSpeed(127);
+			else if (vexRT[Btn6D]==1)
+				setLiftSpeed(-127);
+			else
+				setLiftSpeed(0);	//lift
+
+			if(vexRT[Btn5U]==1)
+				setIntake(127);
+			else if(vexRT[Btn5D]==1)
+				setIntake(-127);
+			else
+				setIntake(0);		//intake
+
+			//if((DriveX > 20) || (DriveX < -20))
 
 			//driveArcade(DriveY, DriveX); //drive arcade method
 			driveMecanum(DriveY, DriveX, rotation);
-			setLiftSpeed(liftSpeed); //lift speed method
 			setClaw(clawVal);
 
 
