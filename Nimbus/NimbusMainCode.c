@@ -1,6 +1,7 @@
 #pragma config(Sensor, in1,    leftPot,        sensorPotentiometer)
 #pragma config(Sensor, in2,    rightPot,       sensorPotentiometer)
 #pragma config(Sensor, dgtl1,  claw,           sensorDigitalOut)
+#pragma config(Sensor, dgtl2,  claw2,          sensorDigitalOut)
 #pragma config(Motor,  port1,           rightRear,     tmotorVex393, openLoop)
 #pragma config(Motor,  port2,           leftRear,      tmotorVex393, openLoop, reversed)
 #pragma config(Motor,  port3,           rightLift1,    tmotorVex393, openLoop)
@@ -58,10 +59,12 @@ void setIntake(int y)
 	motor[rightIntake] = motor[leftIntake] = y;
 }
 
-void setClaw(int y)
+void setClaw(int y, int x)
 {
 	SensorValue[claw] = y;
+	SensorValue[claw2] = x;
 }
+
 
 void pre_auton()
 {
@@ -113,6 +116,7 @@ task usercontrol()
 
 			//int liftCorrection = vexRT[Ch1];
 			int clawVal = vexRT[Btn8D];
+			int clawVal2 = vexRT[Btn8R];
 
 			if (abs(DriveY) < 5)
 				DriveY = 0; // Deadband
@@ -139,7 +143,7 @@ task usercontrol()
 
 			//driveArcade(DriveY, DriveX); //drive arcade method
 			driveMecanum(DriveY, DriveX, rotation);
-			setClaw(clawVal);
+			setClaw(clawVal, clawVal2);
 
 
 		}
