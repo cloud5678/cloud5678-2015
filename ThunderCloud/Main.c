@@ -51,8 +51,8 @@ void initPID()
 }
 void driveArcade(int y, int x)
 {
-	motor[frontLeft] = motor[backLeft] = y + x;
-	motor[frontRight] = motor[backRight] = y - x;
+	motor[frontLeft] = motor[backLeft] = y - x;
+	motor[frontRight] = motor[backRight] = y + x;
 }
 void driveTank(int l, int r)
 {
@@ -60,10 +60,10 @@ void driveTank(int l, int r)
 	motor[frontRight] = motor[backRight] = r;
 }
 
-void setLiftSpeed(int y, int x)
+void setLiftSpeed(int x)
 {
-	motor[rightLift1] = motor[rightLift2] = y + x;
-	motor[leftLift1] = motor[leftLift2] = y - x;
+	motor[rightLift1] = motor[rightLift2] = x;
+	motor[leftLift1] = motor[leftLift2] = x;
 }
 
 void setIntakeSpeed(int s)
@@ -115,9 +115,8 @@ task usercontrol()
 	while (true)
 	{
 				int driveX = vexRT[Ch4];
-		  	int driveY = -vexRT[Ch3] ;
+		  	int driveY = vexRT[Ch3] ;
 		  	int liftSpeed = vexRT[Ch2];
-		  	int liftCorrection = vexRT[Ch1];
 
 
 
@@ -126,7 +125,7 @@ task usercontrol()
 				if (abs(liftSpeed) < 8) liftSpeed = 0; // Lift deadband
 
 		  	driveArcade(driveY * 100 / 128, driveX * 100 / 128);
-		  	setLiftSpeed(liftSpeed * 100 / 128, liftCorrection * 64 / 128);
+		  	setLiftSpeed(liftSpeed * 100 / 128);
 		  	if(vexRT[Btn5U]==1)
 		  	{
 		  		setIntakeSpeed(127);
