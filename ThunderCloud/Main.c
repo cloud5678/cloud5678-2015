@@ -1,5 +1,4 @@
-#pragma config(Sensor, in1,    leftPot,        sensorPotentiometer)
-#pragma config(Sensor, in2,    rightPot,       sensorPotentiometer)
+#pragma config(Sensor, in1,    armPot,        sensorPotentiometer)
 #pragma config(Sensor, dgtl1,  cubeGrabber,    sensorDigitalOut)
 #pragma config(Motor,  port1,           frontRight,    tmotorVex393, openLoop)
 #pragma config(Motor,  port2,           frontLeft,     tmotorVex393, openLoop, reversed)
@@ -46,9 +45,10 @@ void robotShutdown()
 
 void initPID()
 {
-	//init(liftPID,derp,0,0);
+	init(liftPID,127/70,0,0);
 	setThresholds(liftPID, 128, -127);
 }
+
 void driveArcade(int y, int x)
 {
 	motor[frontLeft] = motor[backLeft] = y - x;
@@ -84,13 +84,14 @@ void setCubeGrabber()
 	solExtended = !solExtended;
 }
 
+
 void pre_auton()
 {
 	initPID();
   // Set bStopTasksBetweenModes to false if you want to keep user created tasks running between
   // Autonomous and Tele-Op modes. You will need to manage all user created tasks if set to false.
   bStopTasksBetweenModes = true;
-
+	SensorValue[armPot] = 0;
 	// All activities that occur before the competition starts
 	// Example: clearing encoders, setting servo positions, ...
 }
@@ -99,10 +100,18 @@ void pre_auton()
 
 task autonomous()
 {
+	setLiftSpeed(127);
+	wait1Msec(700);
+	setLiftSpeed(0);
 	driveArcade(127,0);
-	wait1Msec(500);
+	wait1Msec(400);
 	driveArcade(0,0);
-
+	setIntakeSpeed(-127);
+	wait1Msec(2000);
+	setIntakeSpeed(0);
+	driveArcade(-127,0);
+	wait1Msec(400);
+	driveArcade(0,0);
 
 }
 
@@ -111,7 +120,6 @@ task autonomous()
 task usercontrol()
 {
 	// User control code here, inside the loop
-	int btn6UValue = 0;
 	while (true)
 	{
 				int driveX = vexRT[Ch4];
@@ -119,18 +127,27 @@ task usercontrol()
 		  	int liftSpeed = vexRT[Ch2];
 
 
-
 				if (abs(driveY) < 8) driveY = 0; // Drive deadband
 				if (abs(driveX) < 8) driveX = 0; // Drive deadband
-				if (abs(liftSpeed) < 8) liftSpeed = 0; // Lift deadband
+				if (abs(liftSpeed) < 8) liftSpeed = 0; // Lift deadband & armPot in bounds
+
+				if(liftSpeed!=0)
+				{
+					setSetpoint(liftPID, SensorValue[armPot]);
+					setLiftSpeed(liftSpeed * 100 / 128);
+				}
+				else
+				{
+					setLiftSpeed(calculate(liftPID,	SensorValue[armPot]));
+				}
 
 		  	driveArcade(driveY * 100 / 128, driveX * 100 / 128);
-		  	setLiftSpeed(liftSpeed * 100 / 128);
-		  	if(vexRT[Btn5U]==1)
+
+		  	if(vexRT[Btn6U]==1)
 		  	{
 		  		setIntakeSpeed(127);
 		  	}
-		  	else if(vexRT[Btn6U]==1)
+		  	else if(vexRT[Btn5U]==1)
 		  	{
 		  		setIntakeSpeed(-127);
 		  	}
@@ -138,7 +155,6 @@ task usercontrol()
 		  	{
 		  		setIntakeSpeed(0);
 		  	}
-		  	btn6UValue = vexRT[Btn6U];
 		  	wait1Msec(20);
 
 	}
