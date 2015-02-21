@@ -1,6 +1,5 @@
 #pragma config(Sensor, in1,    armPot,         sensorPotentiometer)
-#pragma config(Sensor, dgtl1,  cubeGrabber,    sensorDigitalOut)
-#pragma config(Sensor, dgtl2,  autonButton,    sensorTouch)
+#pragma config(Sensor, dgtl1,  autonButton,    sensorTouch)
 #pragma config(Motor,  port1,           frontRight,    tmotorVex393, openLoop)
 #pragma config(Motor,  port2,           frontLeft,     tmotorVex393, openLoop, reversed)
 #pragma config(Motor,  port3,           backLeft,      tmotorVex393, openLoop, reversed)
@@ -120,18 +119,22 @@ task autonomous()
 	wait1Msec(400);
 	driveArcade(0,0);
 	*/
-	driveArcade(127,0);	//pick up extra cube
-	wait1Msec(500);
-	setIntakeSpeed(127);
-	wait1Msec(300);
+
+	//pick up extra cube
+	driveArcade(127,0);	//drive forward
+	wait1Msec(500);			//<-- may need to change time
+	setIntakeSpeed(127);//pick up cube
+	driveArcade(0,0);		//stop
+	wait1Msec(300);			//<-- may need to change time
 	setIntakeSpeed(0);
-	driveArcade(-127,0);
-	wait1Msec(500);
-	driveArcade(0,0);
+	driveArcade(-127,0);//go back
+	wait1Msec(500);			//<-- may need to change time
+	driveArcade(0,0);		//stop
 
-	while(!SensorValue[autonButton]){}
+	while(SensorValue[autonButton] == 0){}
 
-	setLiftSpeed(127);	//drop cubes
+	//drop cubes
+	setLiftSpeed(127);
 	wait1Msec(700);
 	setLiftSpeed(0);
 	driveArcade(127,0);
