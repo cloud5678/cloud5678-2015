@@ -10,7 +10,7 @@ Nimbus (5678N) Contributors:
 Mason Cole  
   
 Stratus (5678S) Contributors:  
-TBD  
+Gilbert Martinez
 
 Cirrus (5678C) Contributors:  
 TBD  
