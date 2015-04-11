@@ -49,42 +49,10 @@ void pre_auton()
 
 task autonomous()
 {
-	motor[leftLiftBottom] = 127;
-	motor[leftLiftTop] = 127;
-	motor[rightLiftBottom] = 127;
-	motor[rightLiftTop] = 127;
-	wait1Msec(2000);
-	motor[frontLeft] = -127;
-	motor[backLeft] = -127;
-	motor[frontRight] = 127;
-	motor[backRight] = 127;
-	motor[leftLiftBottom] = 127;
-	motor[leftLiftTop] = 127;
-	motor[rightLiftBottom] = 127;
-	motor[rightLiftTop] = 127;
-	wait1Msec(500);
-	motor[frontLeft] = 0;
-	motor[backLeft] = 0;
-	motor[frontRight] = 0;
-	motor[backRight] = 0;
-	motor[leftLiftBottom] = 0;
-	motor[leftLiftTop] = 0;
-	motor[rightLiftBottom] = 0;
-	motor[rightLiftTop] = 0;
-	wait1Msec(3000);
-	motor[frontLeft] = 127;
-	motor[backLeft] = 127;
-	motor[frontRight] = -127;
-	motor[backRight] = -127;
-	wait1Msec(1000);
-	motor[frontLeft] = 0;
-	motor[backLeft] = 0;
-	motor[frontRight] = 0;
-	motor[backRight] = 0;
-	motor[leftLiftBottom] = 0;
-	motor[leftLiftTop] = 0;
-	motor[rightLiftBottom] = 0;
-	motor[rightLiftTop] = 0;
+motor[frontRight] = 127;
+motor[frontLeft] = 127;
+motor[backRight] = 127;
+motor[backLeft] = 127;
 }
 ///////////////////////////////////DO NOT TOUCH//////////////////////////////////////////
 void driveArcade(int y, int x)
@@ -120,10 +88,10 @@ task usercontrol()
 	// for sensor use SensorValue[nameofsensor(i.e. Pot)]
 	while (true)
 	{
-		int driveX = vexRT[Ch3];
-		int driveY = vexRT[Ch4] ;
-		int liftSpeed = vexRT[Ch1];
-		int liftCorrection = vexRT[Ch2];
+		int driveX = vexRT[Ch4];
+		int driveY = vexRT[Ch3] ;
+		int liftSpeed = vexRT[Ch2];
+		int liftCorrection = vexRT[Ch1];
     int deposit = vexRT[Btn6D];
 		int intake = vexRT[Btn6U];
 		int right = vexRT[Btn7R];
@@ -131,7 +99,7 @@ task usercontrol()
 		//SensorValue[PotR];
 		//SensorValue[PotL];
 		driveArcade(driveY * 100 / 128, driveX * -100 / 128);
-		setLiftSpeed(liftSpeed*0/128, liftCorrection*80/128);
+		setLiftSpeed(liftSpeed*127/128, liftCorrection*0/128);
 	  setIntake(deposit, intake);
 	  setHDrive(right, left);
 	}
