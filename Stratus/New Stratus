@@ -29,7 +29,8 @@
 /////////////////////////////////////////////////////////////////////////////////////////
 
 void pre_auton()
-{
+{	
+		
 	// Set bStopTasksBetweenModes to false if you want to keep user created tasks running between
 	// Autonomous and Tele-Op modes. You will need to manage all user created tasks if set to false.
 	bStopTasksBetweenModes = true;
@@ -47,12 +48,63 @@ void pre_auton()
 //
 /////////////////////////////////////////////////////////////////////////////////////////
 
-task autonomous()
-{
-motor[frontRight] = 127;
-motor[frontLeft] = 127;
-motor[backRight] = 127;
-motor[backLeft] = 127;
+task autonomous(){	
+	motor [intake1] = 127;
+		wait1Msec (1000);
+		motor [intake1] = 0;
+		wait1Msec (1);
+	motor [frontLeft] = 127;
+	motor [frontRight] = 127;
+	motor [backLeft] = 127;
+	motor [backRight] = 127;
+		wait1Msec (1000);
+	motor [frontLeft] = 0;
+	motor [frontRight] = 0;
+	motor [backLeft] = 0;
+	motor [backRight] = 0;
+		wait1Msec (1);
+	motor [intake1] = -127;
+		wait1Msec (1000);
+	motor [intake1] = 0;
+		wait1Msec (1);
+	motor [hDrive] = 127;
+		wait1Msec (500);
+	motor [hDrive] = 0;
+		wait1Msec (1);
+	motor [frontLeft] = -127;
+	motor [frontRight] = 127;
+	motor [backLeft] = -127;
+	motor [backRight] = 127;
+		wait1Msec (1000);
+	motor [frontLeft] = 0;
+	motor [frontRight] = 0;
+	motor [backLeft] = 0;
+	motor [backRight] = 0;
+		wait1Msec (1);
+	motor [rightLiftTop] = 127;
+	motor [rightLiftBottom] = 127;
+	motor [leftLiftBottom] = 127;
+	motor [leftLiftTop] = 127;
+		wait1Msec (3000);
+	motor [rightLiftTop] = 0;
+	motor [rightLiftBottom] = 0;
+	motor [leftLiftBottom] = 0;
+	motor [leftLiftTop] = 0;
+		wait1Msec (1);
+	motor [frontLeft] = 127;
+	motor [frontRight] = 127;
+	motor [backLeft] = 127;
+	motor [backRight] = 127;
+		wait1Msec (1000);
+	motor [frontLeft] = 0;
+	motor [frontRight] = 0;
+	motor [backLeft] = 0;
+	motor [backRight] = 0;
+		wait1Msec (1);
+	motor [intake1] = 127;
+		wait1Msec (3000);
+	motor [intake1] = 0;
+		wait1Msec (1);
 }
 ///////////////////////////////////DO NOT TOUCH//////////////////////////////////////////
 void driveArcade(int y, int x)
