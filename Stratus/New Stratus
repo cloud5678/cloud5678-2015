@@ -38,7 +38,42 @@ void pre_auton()
 	// All activities that occur before the competition starts
 	// Example: clearing encoders, setting servo positions, ...
 }
-
+void stopLift()
+{	motor [rightLiftTop] = 0;
+	motor [rightLiftBottom] = 0;
+	motor [leftLiftBottom] = 0;
+	motor [leftLiftTop] = 0;
+}
+void stopDrive()
+{	motor [frontLeft] = 0;
+	motor [frontRight] = 0;
+	motor [backLeft] = 0;
+	motor [backRight] = 0;
+	motor [hDrive] = 0;
+}
+void stopAll()
+{ stopDrive();
+	stopLift();
+	motor [intake1] = 0;
+}
+void drive(int speed)
+{	motor [frontLeft] = speed;
+	motor [frontRight] = speed;
+	motor [backLeft] = speed;
+	motor [backRight] = speed;
+}
+void turn(int turning)
+{	motor [frontLeft] = -turning;
+	motor [frontRight] = turning;
+	motor [backLeft] = -turning;
+	motor [backRight] = turning;
+}
+void lift(int lift)
+{ motor [rightLiftTop] = lift;
+	motor [rightLiftBottom] = lift;
+	motor [leftLiftBottom] = lift;
+	motor [leftLiftTop] = lift;
+}
 /////////////////////////////////////////////////////////////////////////////////////////
 //
 //                                 Autonomous Task
@@ -48,7 +83,7 @@ void pre_auton()
 //
 /////////////////////////////////////////////////////////////////////////////////////////
 
-task autonomous(){
+void auton5Red(){
 	motor [intake1] = -127;
 	motor [rightLiftTop] = -127;
 	motor [rightLiftBottom] = -127;
@@ -103,6 +138,114 @@ task autonomous(){
 		wait1Msec (3000);
 	motor [intake1] = 0;
 		wait1Msec (1);
+	}
+	void auton5Blue(){
+	motor [intake1] = -127;
+	motor [rightLiftTop] = -20;
+	motor [rightLiftBottom] = -20;
+	motor [leftLiftBottom] = -20;
+	motor [leftLiftTop] = -20;
+		wait1Msec (600);
+		motor [intake1] = 0;
+		wait1Msec (1);
+	motor [frontLeft] = 127;
+	motor [frontRight] = 127;
+	motor [backLeft] = 127;
+	motor [backRight] = 127;
+		wait1Msec (1000);
+	motor [frontLeft] = 0;
+	motor [frontRight] = 0;
+	motor [backLeft] = 0;
+	motor [backRight] = 0;
+		wait1Msec (1);
+	motor [intake1] = -127;
+		wait1Msec (1250);
+	motor [intake1] = 0;
+		wait1Msec (1);
+	motor [hDrive] = 100;
+		wait1Msec(2000);
+	motor [hDrive] = 0;
+		wait1Msec(1);
+	motor [frontLeft] = -127;
+	motor [frontRight] = 127;
+	motor [backLeft] = -127;
+	motor [backRight] = 127;
+		wait1Msec (600);
+	motor [frontLeft] = 0;
+	motor [frontRight] = 0;
+	motor [backLeft] = 0;
+	motor [backRight] = 0;
+		wait1Msec (1);
+	motor [hDrive] = 100;
+		wait1Msec(2750);
+	motor [hDrive] = 0;
+		wait1Msec(1);
+	motor [rightLiftTop] = 0;
+	motor [rightLiftBottom] = 0;
+	motor [leftLiftBottom] = 0;
+	motor [leftLiftTop] = 0;
+		wait1Msec (1);
+	lift(127);
+		wait1Msec (1500);
+	drive(127);
+		wait1Msec (1000);
+	drive (-50);
+		wait1Msec (250);
+	stopDrive ();
+		wait1Msec (1);
+	motor [intake1] = 127;
+		wait1Msec (3000);
+	motor [intake1] = 0;
+		wait1Msec (1);
+	stopAll ();
+		wait1Msec (1);
+	}
+	void auton3Blue(){
+  lift(127);
+		wait1Msec (550);
+	lift(20);
+		wait1Msec (1);	
+	turn(-70);
+		wait1Msec (400);
+	stopDrive();
+		wait1Msec (1);
+	drive(-127);
+		wait1Msec (100);
+	stopDrive();
+		wait1Msec (1);
+	motor[intake1] = 127;
+		wait1Msec(2000);
+	motor[intake1] = 0;
+		wait1Msec(1);
+	drive(-127);
+		wait1Msec (400);
+	stopAll();
+		wait1Msec (1);
+	}
+	void auton3Red(){
+  lift(127);
+		wait1Msec (550);
+	lift(20);
+		wait1Msec (1);	
+	turn(70);
+		wait1Msec (400);
+	stopDrive();
+		wait1Msec (1);
+	drive(-127);
+		wait1Msec (100);
+	stopDrive();
+		wait1Msec (1);
+	motor[intake1] = 127;
+		wait1Msec(2000);
+	motor[intake1] = 0;
+		wait1Msec(1);
+	drive(-127);
+		wait1Msec (400);
+	stopAll();
+		wait1Msec (1);
+	}
+task autonomous(){
+	auton5Blue();
 }
 ///////////////////////////////////DO NOT TOUCH//////////////////////////////////////////
 void driveArcade(int y, int x)
